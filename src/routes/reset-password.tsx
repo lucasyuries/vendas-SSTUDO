@@ -98,16 +98,11 @@ function ResetPasswordPage() {
           ) : !ready ? (
             <div className="text-center py-8">
               <Loader2 className="mx-auto h-6 w-6 animate-spin text-muted-foreground" />
-              <p className="mt-3 text-sm text-muted-foreground">
-                Validando link de recuperação…
-              </p>
+              <p className="mt-3 text-sm text-muted-foreground">Validando link de recuperação…</p>
               <p className="mt-2 text-xs text-muted-foreground">
                 Se nada acontecer em alguns segundos, o link pode ter expirado.
                 <br />
-                <Link
-                  to="/esqueci-senha"
-                  className="text-foreground underline underline-offset-4"
-                >
+                <Link to="/esqueci-senha" className="text-foreground underline underline-offset-4">
                   Solicitar novo link
                 </Link>
               </p>

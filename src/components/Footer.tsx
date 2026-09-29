@@ -1,6 +1,6 @@
 import { Lock } from "lucide-react";
-import logoSstudoAsset from "@/assets/logo-sstudo.webp.asset.json";
-const logoSstudo = logoSstudoAsset.url;
+import { Link } from "@tanstack/react-router";
+import { PRODUCTS } from "@/lib/products";
 import { FadeInView } from "./FadeInView";
 
 export function Footer() {
@@ -12,11 +12,20 @@ export function Footer() {
             <div className="lg:col-span-2">
               <div className="flex items-center gap-2">
                 <span className="inline-flex items-center justify-center rounded-md bg-white px-2 py-1">
-                  <img src={logoSstudo} alt="SSTudo — Conformidade NR-01" width={84} height={28} loading="lazy" decoding="async" className="h-7 w-auto" />
+                  <img
+                    src="/logo-sstudo.webp"
+                    alt="SSTudo"
+                    width={368}
+                    height={122}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-7 w-auto"
+                  />
                 </span>
               </div>
               <p className="mt-4 max-w-sm text-sm text-primary-foreground/75">
-                SSTudo — Ecossistema de tecnologia para conformidade em Segurança e Saúde no Trabalho. PGR, ASO, canal de denúncias e análise de riscos psicossociais.
+                SSTudo — Ecossistema de tecnologia para conformidade em Segurança e Saúde no
+                Trabalho. PGR, ASO, canal de denúncias e análise de riscos psicossociais.
               </p>
               <div className="mt-5 flex items-center gap-3">
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-primary-foreground/20 bg-primary-foreground/5 px-2.5 py-1 text-[11px] text-primary-foreground/80">
@@ -28,22 +37,84 @@ export function Footer() {
               </div>
             </div>
 
+            {/* Links de página, não âncoras: o rodapé aparece em todas as
+                páginas, e âncora da página inicial não funciona nas internas. */}
             <div>
-              <p className="text-xs uppercase tracking-widest text-primary-foreground">Produto</p>
+              <p className="text-xs uppercase tracking-widest text-primary-foreground">Produtos</p>
               <ul className="mt-4 space-y-2.5 text-sm text-primary-foreground/75">
-                <li><a href="#solucao" className="hover:text-primary-foreground">Recursos</a></li>
-                <li><a href="#faq" className="hover:text-primary-foreground">FAQ</a></li>
-                <li><a href="#contato" className="hover:text-primary-foreground">Contato</a></li>
+                {PRODUCTS.map((produto) => (
+                  <li key={produto.id}>
+                    <Link
+                      to="/produtos/$produtoId"
+                      params={{ produtoId: produto.id }}
+                      className="inline-flex min-h-11 items-center hover:text-primary-foreground"
+                    >
+                      {produto.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <p className="text-xs uppercase tracking-widest text-primary-foreground">Empresa</p>
+              <ul className="mt-4 space-y-2.5 text-sm text-primary-foreground/75">
+                <li>
+                  <Link
+                    to="/sobre"
+                    className="inline-flex min-h-11 items-center hover:text-primary-foreground"
+                  >
+                    Sobre a SSTudo
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/sobre"
+                    hash="parceiros"
+                    className="inline-flex min-h-11 items-center hover:text-primary-foreground"
+                  >
+                    Parceiros
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/"
+                    hash="faq"
+                    className="inline-flex min-h-11 items-center hover:text-primary-foreground"
+                  >
+                    Perguntas frequentes
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/contato"
+                    className="inline-flex min-h-11 items-center hover:text-primary-foreground"
+                  >
+                    Contato
+                  </Link>
+                </li>
               </ul>
             </div>
 
             <div>
               <p className="text-xs uppercase tracking-widest text-primary-foreground">Contato</p>
               <ul className="mt-4 space-y-2.5 text-sm text-primary-foreground/75">
-                <li><a href="mailto:contato@sstudo.com.br" className="hover:text-primary-foreground">contato@sstudo.com.br</a></li>
                 <li>
-                  <a href="https://wa.me/559391009999" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground">
-                    📞 WhatsApp: (93) 9100-9999
+                  <a
+                    href="mailto:contato@sstudo.com.br"
+                    className="inline-flex min-h-11 items-center hover:text-primary-foreground"
+                  >
+                    contato@sstudo.com.br
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://wa.me/5593992397414"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-11 items-center hover:text-primary-foreground"
+                  >
+                    WhatsApp: (93) 99239-7414
                   </a>
                 </li>
               </ul>

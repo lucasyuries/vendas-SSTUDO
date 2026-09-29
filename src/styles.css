@@ -37,12 +37,48 @@
   --color-warning-foreground: var(--warning-foreground);
   --color-surface: var(--surface);
   --color-surface-muted: var(--surface-muted);
+  --color-surface-subtle: var(--surface-subtle);
+  --color-surface-tint: var(--surface-tint);
 
-  --font-display: "Roboto", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Roboto", ui-sans-serif, system-ui, sans-serif;
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-highlight: var(--brand-highlight);
+  --color-on-deep: var(--on-deep);
+  --color-on-deep-soft: var(--on-deep-soft);
+
+  --color-foreground-soft: var(--foreground-soft);
+  --color-border-strong: var(--border-strong);
+
+  --color-product-psicohub: var(--product-psicohub);
+  --color-product-aso: var(--product-aso);
+  --color-product-denuncia: var(--product-denuncia);
+  --color-product-pgr: var(--product-pgr);
+
+  --color-whatsapp: var(--whatsapp);
+
+  --color-matrix-0: var(--matrix-0);
+  --color-matrix-1: var(--matrix-1);
+  --color-matrix-2: var(--matrix-2);
+  --color-matrix-3: var(--matrix-3);
+
+  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* Escala tipográfica fluida: interpola continuamente entre 375px e 1280px
+     de largura, em vez de saltar por breakpoint. */
+  --text-display: clamp(2.25rem, 3.2vw + 1.1rem, 3.5rem);
+  --text-display--line-height: 1.05;
+  --text-section: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+  --text-section--line-height: 1.12;
+  --text-card: clamp(1.125rem, 1vw + 0.9rem, 1.375rem);
+  --text-card--line-height: 1.3;
+  --text-lead: clamp(1.0625rem, 0.6vw + 0.95rem, 1.25rem);
+  --text-lead--line-height: 1.6;
+  --text-body: clamp(1rem, 0.3vw + 0.95rem, 1.125rem);
+  --text-body--line-height: 1.65;
 
   --shadow-soft: 0 1px 2px oklch(0.2 0.04 240 / 0.04), 0 8px 24px oklch(0.2 0.04 240 / 0.06);
-  --shadow-elevated: 0 2px 4px oklch(0.2 0.04 240 / 0.06), 0 24px 48px -12px oklch(0.2 0.04 240 / 0.12);
+  --shadow-elevated:
+    0 2px 4px oklch(0.2 0.04 240 / 0.06), 0 24px 48px -12px oklch(0.2 0.04 240 / 0.12);
 }
 
 :root {
@@ -56,9 +92,41 @@
 
   --background: #ffffff;
   --foreground: #0f172a;
+  /* Texto secundário com mais peso que --muted-foreground, para corpo de
+     parágrafo sobre fundo claro. */
+  --foreground-soft: #334155;
 
   --surface: #2d4b9d;
   --surface-muted: #003785;
+  /* Fundo alternado das seções claras, para dar ritmo à rolagem. */
+  --surface-subtle: #f8fafc;
+  /* Fundo dos círculos de ícone. */
+  --surface-tint: #eff6ff;
+
+  /* Seções de fundo escuro (hero, faixas de destaque) e o texto sobre elas. */
+  --brand-deep: #0a1628;
+  --brand-deep-glow: #0f2040;
+  --brand-highlight: #60a5fa;
+  --on-deep: #ffffff;
+  --on-deep-soft: #94a3b8;
+
+  /* Cor de destaque por produto. Aplicada SOMENTE ao ícone do produto —
+     decisão de projeto para diferenciar sem fragmentar a identidade. */
+  --product-psicohub: #7c3aed;
+  --product-aso: #0d9488;
+  --product-denuncia: #ea580c;
+  --product-pgr: #2563eb;
+
+  /* Cor oficial da marca WhatsApp, obrigatória por diretriz de uso. */
+  --whatsapp: #25d366;
+
+  /* Escala da matriz de risco. Segue a convenção de SST — verde aceitável,
+     amarelo tolerável, laranja substancial, vermelho intolerável — que é a
+     mesma linguagem de cor das placas de segurança. */
+  --matrix-0: #16a34a;
+  --matrix-1: #eab308;
+  --matrix-2: #f97316;
+  --matrix-3: #dc2626;
 
   --card: #ffffff;
   --card-foreground: #0f172a;
@@ -87,6 +155,7 @@
   --destructive-foreground: #ffffff;
 
   --border: #e5e7eb;
+  --border-strong: #cbd5e1;
   --input: #e5e7eb;
   --ring: #003785;
 
@@ -97,27 +166,9 @@
   --chart-5: #5b6478;
 }
 
-.dark {
-  --background: oklch(0.16 0.02 230);
-  --foreground: oklch(0.97 0.005 95);
-  --surface: oklch(0.2 0.025 230);
-  --surface-muted: oklch(0.24 0.025 230);
-  --card: oklch(0.22 0.025 230);
-  --card-foreground: oklch(0.97 0.005 95);
-  --popover: oklch(0.22 0.025 230);
-  --popover-foreground: oklch(0.97 0.005 95);
-  --primary: oklch(0.78 0.12 165);
-  --primary-foreground: oklch(0.16 0.02 230);
-  --secondary: oklch(0.28 0.025 230);
-  --secondary-foreground: oklch(0.97 0.005 95);
-  --muted: oklch(0.26 0.025 230);
-  --muted-foreground: oklch(0.7 0.015 230);
-  --accent: oklch(0.78 0.12 165);
-  --accent-foreground: oklch(0.16 0.02 230);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.78 0.12 165);
-}
+/* O site público é apenas de tema claro: nenhum componente aplica a classe
+   `.dark` e não existe alternância de tema. A paleta escura anterior foi
+   removida por ser código morto. Seções escuras usam --brand-deep. */
 
 @layer base {
   * {
@@ -135,26 +186,44 @@
     font-family: var(--font-sans);
     font-feature-settings: "kern", "liga", "calt";
   }
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-display);
     font-weight: 700;
     letter-spacing: -0.018em;
   }
-  h1 { letter-spacing: -0.028em; line-height: 1.05; }
-  h2 { letter-spacing: -0.022em; line-height: 1.12; }
-  p { line-height: 1.65; }
+  /* Archivo fecha bem em tamanho grande: quanto maior o título, mais apertado
+     o espaçamento, como em placa de sinalização. */
+  h1 {
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+    font-weight: 800;
+  }
+  h2 {
+    letter-spacing: -0.028em;
+    line-height: 1.1;
+  }
+  p {
+    line-height: 1.65;
+  }
 
-  a, button {
-    transition: color 280ms cubic-bezier(0.22, 1, 0.36, 1),
-                background-color 280ms cubic-bezier(0.22, 1, 0.36, 1),
-                border-color 280ms cubic-bezier(0.22, 1, 0.36, 1),
-                transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
-                box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1),
-                opacity 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  a,
+  button {
+    transition:
+      color 280ms cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 280ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 280ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 280ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       animation-duration: 0.001ms !important;
       transition-duration: 0.001ms !important;
     }
@@ -162,9 +231,40 @@
 }
 
 @layer utilities {
-  .font-display { font-family: var(--font-display); }
-  .text-balance { text-wrap: balance; }
-  .text-pretty { text-wrap: pretty; }
+  /* Varredura da matriz de risco: as células acendem uma a uma, em diagonal,
+     como uma avaliação sendo preenchida. É o único movimento não disparado
+     pelo usuário no site, e existe para dizer o que a empresa faz.
+     A regra de movimento reduzido, na camada base, desliga isto. */
+  @keyframes acender-celula {
+    from {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+    to {
+      opacity: 0.92;
+      transform: scale(1);
+    }
+  }
+  .matrix-cell {
+    opacity: 0;
+    animation: acender-celula 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .matrix-cell {
+      opacity: 0.92;
+      animation: none;
+    }
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
 
   .bg-grid {
     background-image:
@@ -189,13 +289,17 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
-  .snap-row::-webkit-scrollbar { display: none; }
+  .snap-row::-webkit-scrollbar {
+    display: none;
+  }
   .snap-item {
     scroll-snap-align: center;
     flex: 0 0 85%;
     max-width: 22rem;
   }
   @media (min-width: 640px) {
-    .snap-item { flex-basis: 60%; }
+    .snap-item {
+      flex-basis: 60%;
+    }
   }
 }

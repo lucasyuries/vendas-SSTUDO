@@ -20,6 +20,15 @@ dist-ssr
 .wrangler/
 .dev.vars
 
+# Vercel: saída do build e vínculo local de projeto
+.vercel
+
+# Anotações internas de planejamento (tickets e specs).
+# Ficam fora do controle de versão de propósito: este repositório é público, e
+# as anotações descrevem decisões de segurança, contas administrativas e
+# achados sobre o banco compartilhado com o PsicoHub.
+.scratch/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

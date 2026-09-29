@@ -1,4 +1,5 @@
 import { ShieldCheck, Unlock, CheckCircle, Handshake } from "lucide-react";
+import { SectionLabel } from "@/components/SectionLabel";
 
 const ITEMS = [
   {
@@ -29,13 +30,14 @@ const ITEMS = [
 
 export function WhySSTudo() {
   return (
-    <section id="por-que-sstudo" className="bg-white py-16 lg:py-24">
+    <section id="por-que-sstudo" className="bg-background py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="font-display text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+          <SectionLabel>Por que a SSTudo</SectionLabel>
+          <h2 className="mt-4 font-display text-section font-bold tracking-tight text-foreground">
             Tecnologia acessível para conformidade em SST
           </h2>
-          <p className="mt-4 text-base md:text-lg text-slate-600">
+          <p className="mt-4 text-lead text-foreground-soft">
             Simplificamos a gestão de segurança e saúde do trabalho para empresas de todos os portes
           </p>
         </div>
@@ -46,14 +48,18 @@ export function WhySSTudo() {
             return (
               <div
                 key={item.title}
-                className="flex gap-4 rounded-2xl border border-slate-200 bg-white p-6"
+                className="flex gap-4 rounded-2xl border border-border bg-card p-6"
               >
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-50">
-                  <Icon className="h-5 w-5 text-blue-600" />
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-tint">
+                  <Icon className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-display text-lg font-semibold text-slate-900">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.description}</p>
+                  <h3 className="font-display text-card font-semibold text-foreground">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-foreground-soft">
+                    {item.description}
+                  </p>
                 </div>
               </div>
             );

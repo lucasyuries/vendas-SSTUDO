@@ -1,165 +1,92 @@
 // ============================================================================
-// Componente Contact — formulário "Fale Conosco"
+// Seção de contato — dois caminhos, lado a lado
+// ----------------------------------------------------------------------------
+// Quem está comprando não pode se perder no formulário curto, e quem só tem
+// uma pergunta não pode ser empurrado para o longo. Por isso os dois aparecem
+// juntos, rotulados, com o de orçamento em destaque.
 // ============================================================================
 
-import { useState, type FormEvent } from "react";
-import { Loader2, CheckCircle2, Mail, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { contactSchema } from "@/lib/validations";
+import { Mail, MapPin, MessageCircleQuestion } from "lucide-react";
 import { FadeInView } from "@/components/FadeInView";
+import { QuoteForm } from "@/components/QuoteForm";
+import { QuestionForm } from "@/components/QuestionForm";
+import { SectionLabel } from "@/components/SectionLabel";
 
 export function Contact() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [done, setDone] = useState(false);
-  const [form, setForm] = useState({ fullName: "", email: "", phone: "", message: "" });
-
-  function set<K extends keyof typeof form>(k: K) {
-    return (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-      setForm((f) => ({ ...f, [k]: e.target.value }));
-  }
-
-  async function onSubmit(e: FormEvent) {
-    e.preventDefault();
-    setError(null);
-    const parsed = contactSchema.safeParse(form);
-    if (!parsed.success) {
-      setError(parsed.error.issues[0]?.message ?? "Verifique os campos.");
-      return;
-    }
-    setLoading(true);
-    try {
-      const { submitContactMessage } = await import("@/lib/contact");
-      await submitContactMessage({ data: parsed.data });
-      setDone(true);
-      setForm({ fullName: "", email: "", phone: "", message: "" });
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Erro inesperado");
-    } finally {
-      setLoading(false);
-    }
-  }
-
   return (
-    <section id="contato" className="py-20 sm:py-28 bg-muted/30">
+    <section id="contato" className="bg-surface-subtle py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <FadeInView className="mx-auto max-w-2xl text-center">
-          <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
-            Fale conosco
-          </span>
-          <h2 className="mt-4 font-display text-3xl sm:text-4xl text-foreground text-balance">
-            Tire suas dúvidas com nossa equipe
+          <SectionLabel>Fale com a SSTudo</SectionLabel>
+          <h2 className="mt-4 font-display text-section font-bold tracking-tight text-foreground">
+            Peça um orçamento para a sua realidade
           </h2>
-          <p className="mt-4 text-muted-foreground">
-            Envie sua mensagem e retornamos em até 1 dia útil.
+          <p className="mt-4 text-lead text-foreground-soft">
+            O preço em SST depende de quantas vidas você gerencia e do seu setor. Conte esses dois
+            dados e devolvemos uma proposta, sem compromisso.
           </p>
         </FadeInView>
 
-        <FadeInView delay={0.15} className="mt-12 grid gap-8 lg:grid-cols-5">
-          {/* Info lateral */}
-          <div className="lg:col-span-2 space-y-6">
-            <div className="flex items-start gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary shrink-0">
-                <Mail className="h-5 w-5" />
-              </span>
-              <div>
-                <p className="text-sm font-medium text-foreground">E-mail</p>
-                <a href="mailto:contato@sstudo.com.br" className="text-sm text-muted-foreground hover:text-foreground">
-                  contato@sstudo.com.br
-                </a>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary shrink-0">
-                <MapPin className="h-5 w-5" />
-              </span>
-              <div>
-                <p className="text-sm font-medium text-foreground">Atendimento</p>
-                <p className="text-sm text-muted-foreground">Seg–Sex · 9h às 18h (BRT)</p>
+        <div className="mt-12 grid gap-8 lg:grid-cols-5">
+          {/* Orçamento — o caminho principal */}
+          <div className="lg:col-span-3">
+            <div className="rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-soft)] sm:p-8">
+              <h3 className="font-display text-card font-semibold text-foreground">
+                Solicitar orçamento
+              </h3>
+              <p className="mt-1 text-sm text-foreground-soft">
+                Seis campos. Leva menos de um minuto.
+              </p>
+              <div className="mt-6">
+                <QuoteForm sourcePath="/" />
               </div>
             </div>
           </div>
 
-          {/* Form */}
-          <div className="lg:col-span-3 rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-[var(--shadow-soft)]">
-            {done ? (
-              <div className="text-center py-8">
-                <CheckCircle2 className="mx-auto h-12 w-12 text-success" />
-                <h3 className="mt-4 font-display text-xl text-foreground">Mensagem enviada!</h3>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Recebemos sua mensagem e responderemos em breve.
-                </p>
-                <Button variant="outline" className="mt-6" onClick={() => setDone(false)}>
-                  Enviar outra
-                </Button>
+          {/* Dúvida e dados de atendimento */}
+          <div className="space-y-6 lg:col-span-2">
+            <div className="rounded-2xl border border-dashed border-border-strong bg-secondary p-6">
+              <div className="flex items-center gap-2">
+                <MessageCircleQuestion className="h-5 w-5 text-primary" />
+                <h3 className="font-display text-base font-semibold text-foreground">
+                  Só uma dúvida?
+                </h3>
               </div>
-            ) : (
-              <form onSubmit={onSubmit} className="space-y-4">
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <Label htmlFor="c-name">Nome completo</Label>
-                    <Input
-                      id="c-name"
-                      value={form.fullName}
-                      onChange={set("fullName")}
-                      disabled={loading}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="c-phone">Telefone</Label>
-                    <Input
-                      id="c-phone"
-                      type="tel"
-                      placeholder="(11) 99999-0000"
-                      value={form.phone}
-                      onChange={set("phone")}
-                      disabled={loading}
-                      required
-                    />
-                  </div>
-                </div>
-                <div>
-                  <Label htmlFor="c-email">E-mail</Label>
-                  <Input
-                    id="c-email"
-                    type="email"
-                    value={form.email}
-                    onChange={set("email")}
-                    disabled={loading}
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="c-msg">Mensagem</Label>
-                  <Textarea
-                    id="c-msg"
-                    rows={5}
-                    placeholder="Conte-nos sobre sua empresa e como podemos ajudar..."
-                    value={form.message}
-                    onChange={set("message")}
-                    disabled={loading}
-                    required
-                  />
-                </div>
+              <p className="mt-1 text-sm text-foreground-soft">
+                Se você ainda não está pedindo proposta, pergunte por aqui.
+              </p>
+              <div className="mt-5">
+                <QuestionForm />
+              </div>
+            </div>
 
-                {error && (
-                  <div className="rounded-lg border border-destructive/40 bg-destructive/5 px-3 py-2 text-sm text-destructive">
-                    {error}
-                  </div>
-                )}
-
-                <Button type="submit" disabled={loading} size="lg" className="w-full">
-                  {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                  Enviar mensagem
-                </Button>
-              </form>
-            )}
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-surface-tint text-primary">
+                  <Mail className="h-5 w-5" />
+                </span>
+                <div>
+                  <p className="text-sm font-medium text-foreground">E-mail</p>
+                  <a
+                    href="mailto:contato@sstudo.com.br"
+                    className="inline-flex min-h-11 items-center text-sm text-foreground-soft hover:text-foreground"
+                  >
+                    contato@sstudo.com.br
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-surface-tint text-primary">
+                  <MapPin className="h-5 w-5" />
+                </span>
+                <div>
+                  <p className="text-sm font-medium text-foreground">Atendimento</p>
+                  <p className="text-sm text-foreground-soft">Seg a sex, das 9h às 18h</p>
+                </div>
+              </div>
+            </div>
           </div>
-        </FadeInView>
+        </div>
       </div>
     </section>
   );

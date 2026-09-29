@@ -130,14 +130,7 @@ function LoginPage() {
           </form>
 
           <p className="mt-6 text-center text-sm text-muted-foreground">
-            Ainda não tem conta?{" "}
-            <Link
-              to="/cadastro"
-              search={{ redirect } as never}
-              className="text-foreground underline underline-offset-4 hover:text-primary"
-            >
-              Criar conta
-            </Link>
+            Acesso restrito à equipe SSTudo. Fale com o administrador para solicitar uma conta.
           </p>
         </div>
 

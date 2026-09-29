@@ -9,19 +9,21 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as EsqueciSenhaRouteImport } from './routes/esqueci-senha'
-import { Route as CadastroRouteImport } from './routes/cadastro'
-import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as ContatoRouteImport } from './routes/contato'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as CheckoutSucessoRouteImport } from './routes/checkout.sucesso'
-import { Route as CheckoutPendenteRouteImport } from './routes/checkout.pendente'
-import { Route as CheckoutErroRouteImport } from './routes/checkout.erro'
-import { Route as ApiMercadoPagoWebhookRouteImport } from './routes/api/mercado-pago-webhook'
-import { Route as AuthenticatedPedidosRouteImport } from './routes/_authenticated/pedidos'
-import { Route as AuthenticatedCheckoutRouteImport } from './routes/_authenticated/checkout'
+import { Route as ProdutosProdutoIdRouteImport } from './routes/produtos.$produtoId'
+import { Route as ParaPublicoIdRouteImport } from './routes/para.$publicoId'
 
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
@@ -37,13 +39,14 @@ const EsqueciSenhaRoute = EsqueciSenhaRouteImport.update({
   path: '/esqueci-senha',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CadastroRoute = CadastroRouteImport.update({
-  id: '/cadastro',
-  path: '/cadastro',
+const ContatoRoute = ContatoRouteImport.update({
+  id: '/contato',
+  path: '/contato',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRoute = AuthenticatedRouteImport.update({
-  id: '/_authenticated',
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -51,136 +54,108 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CheckoutSucessoRoute = CheckoutSucessoRouteImport.update({
-  id: '/checkout/sucesso',
-  path: '/checkout/sucesso',
+const ProdutosProdutoIdRoute = ProdutosProdutoIdRouteImport.update({
+  id: '/produtos/$produtoId',
+  path: '/produtos/$produtoId',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CheckoutPendenteRoute = CheckoutPendenteRouteImport.update({
-  id: '/checkout/pendente',
-  path: '/checkout/pendente',
+const ParaPublicoIdRoute = ParaPublicoIdRouteImport.update({
+  id: '/para/$publicoId',
+  path: '/para/$publicoId',
   getParentRoute: () => rootRouteImport,
-} as any)
-const CheckoutErroRoute = CheckoutErroRouteImport.update({
-  id: '/checkout/erro',
-  path: '/checkout/erro',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiMercadoPagoWebhookRoute = ApiMercadoPagoWebhookRouteImport.update({
-  id: '/api/mercado-pago-webhook',
-  path: '/api/mercado-pago-webhook',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedPedidosRoute = AuthenticatedPedidosRouteImport.update({
-  id: '/pedidos',
-  path: '/pedidos',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-const AuthenticatedCheckoutRoute = AuthenticatedCheckoutRouteImport.update({
-  id: '/checkout',
-  path: '/checkout',
-  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/cadastro': typeof CadastroRoute
+  '/admin': typeof AdminRoute
+  '/contato': typeof ContatoRoute
   '/esqueci-senha': typeof EsqueciSenhaRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/checkout': typeof AuthenticatedCheckoutRoute
-  '/pedidos': typeof AuthenticatedPedidosRoute
-  '/api/mercado-pago-webhook': typeof ApiMercadoPagoWebhookRoute
-  '/checkout/erro': typeof CheckoutErroRoute
-  '/checkout/pendente': typeof CheckoutPendenteRoute
-  '/checkout/sucesso': typeof CheckoutSucessoRoute
+  '/sobre': typeof SobreRoute
+  '/para/$publicoId': typeof ParaPublicoIdRoute
+  '/produtos/$produtoId': typeof ProdutosProdutoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/cadastro': typeof CadastroRoute
+  '/admin': typeof AdminRoute
+  '/contato': typeof ContatoRoute
   '/esqueci-senha': typeof EsqueciSenhaRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/checkout': typeof AuthenticatedCheckoutRoute
-  '/pedidos': typeof AuthenticatedPedidosRoute
-  '/api/mercado-pago-webhook': typeof ApiMercadoPagoWebhookRoute
-  '/checkout/erro': typeof CheckoutErroRoute
-  '/checkout/pendente': typeof CheckoutPendenteRoute
-  '/checkout/sucesso': typeof CheckoutSucessoRoute
+  '/sobre': typeof SobreRoute
+  '/para/$publicoId': typeof ParaPublicoIdRoute
+  '/produtos/$produtoId': typeof ProdutosProdutoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/_authenticated': typeof AuthenticatedRouteWithChildren
-  '/cadastro': typeof CadastroRoute
+  '/admin': typeof AdminRoute
+  '/contato': typeof ContatoRoute
   '/esqueci-senha': typeof EsqueciSenhaRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/_authenticated/checkout': typeof AuthenticatedCheckoutRoute
-  '/_authenticated/pedidos': typeof AuthenticatedPedidosRoute
-  '/api/mercado-pago-webhook': typeof ApiMercadoPagoWebhookRoute
-  '/checkout/erro': typeof CheckoutErroRoute
-  '/checkout/pendente': typeof CheckoutPendenteRoute
-  '/checkout/sucesso': typeof CheckoutSucessoRoute
+  '/sobre': typeof SobreRoute
+  '/para/$publicoId': typeof ParaPublicoIdRoute
+  '/produtos/$produtoId': typeof ProdutosProdutoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/cadastro'
+    | '/admin'
+    | '/contato'
     | '/esqueci-senha'
     | '/login'
     | '/reset-password'
-    | '/checkout'
-    | '/pedidos'
-    | '/api/mercado-pago-webhook'
-    | '/checkout/erro'
-    | '/checkout/pendente'
-    | '/checkout/sucesso'
+    | '/sobre'
+    | '/para/$publicoId'
+    | '/produtos/$produtoId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/cadastro'
+    | '/admin'
+    | '/contato'
     | '/esqueci-senha'
     | '/login'
     | '/reset-password'
-    | '/checkout'
-    | '/pedidos'
-    | '/api/mercado-pago-webhook'
-    | '/checkout/erro'
-    | '/checkout/pendente'
-    | '/checkout/sucesso'
+    | '/sobre'
+    | '/para/$publicoId'
+    | '/produtos/$produtoId'
   id:
     | '__root__'
     | '/'
-    | '/_authenticated'
-    | '/cadastro'
+    | '/admin'
+    | '/contato'
     | '/esqueci-senha'
     | '/login'
     | '/reset-password'
-    | '/_authenticated/checkout'
-    | '/_authenticated/pedidos'
-    | '/api/mercado-pago-webhook'
-    | '/checkout/erro'
-    | '/checkout/pendente'
-    | '/checkout/sucesso'
+    | '/sobre'
+    | '/para/$publicoId'
+    | '/produtos/$produtoId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
-  CadastroRoute: typeof CadastroRoute
+  AdminRoute: typeof AdminRoute
+  ContatoRoute: typeof ContatoRoute
   EsqueciSenhaRoute: typeof EsqueciSenhaRoute
   LoginRoute: typeof LoginRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
-  ApiMercadoPagoWebhookRoute: typeof ApiMercadoPagoWebhookRoute
-  CheckoutErroRoute: typeof CheckoutErroRoute
-  CheckoutPendenteRoute: typeof CheckoutPendenteRoute
-  CheckoutSucessoRoute: typeof CheckoutSucessoRoute
+  SobreRoute: typeof SobreRoute
+  ParaPublicoIdRoute: typeof ParaPublicoIdRoute
+  ProdutosProdutoIdRoute: typeof ProdutosProdutoIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reset-password': {
       id: '/reset-password'
       path: '/reset-password'
@@ -202,18 +177,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EsqueciSenhaRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/cadastro': {
-      id: '/cadastro'
-      path: '/cadastro'
-      fullPath: '/cadastro'
-      preLoaderRoute: typeof CadastroRouteImport
+    '/contato': {
+      id: '/contato'
+      path: '/contato'
+      fullPath: '/contato'
+      preLoaderRoute: typeof ContatoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedRouteImport
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -223,76 +198,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/checkout/sucesso': {
-      id: '/checkout/sucesso'
-      path: '/checkout/sucesso'
-      fullPath: '/checkout/sucesso'
-      preLoaderRoute: typeof CheckoutSucessoRouteImport
+    '/produtos/$produtoId': {
+      id: '/produtos/$produtoId'
+      path: '/produtos/$produtoId'
+      fullPath: '/produtos/$produtoId'
+      preLoaderRoute: typeof ProdutosProdutoIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/checkout/pendente': {
-      id: '/checkout/pendente'
-      path: '/checkout/pendente'
-      fullPath: '/checkout/pendente'
-      preLoaderRoute: typeof CheckoutPendenteRouteImport
+    '/para/$publicoId': {
+      id: '/para/$publicoId'
+      path: '/para/$publicoId'
+      fullPath: '/para/$publicoId'
+      preLoaderRoute: typeof ParaPublicoIdRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/checkout/erro': {
-      id: '/checkout/erro'
-      path: '/checkout/erro'
-      fullPath: '/checkout/erro'
-      preLoaderRoute: typeof CheckoutErroRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/mercado-pago-webhook': {
-      id: '/api/mercado-pago-webhook'
-      path: '/api/mercado-pago-webhook'
-      fullPath: '/api/mercado-pago-webhook'
-      preLoaderRoute: typeof ApiMercadoPagoWebhookRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated/pedidos': {
-      id: '/_authenticated/pedidos'
-      path: '/pedidos'
-      fullPath: '/pedidos'
-      preLoaderRoute: typeof AuthenticatedPedidosRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/checkout': {
-      id: '/_authenticated/checkout'
-      path: '/checkout'
-      fullPath: '/checkout'
-      preLoaderRoute: typeof AuthenticatedCheckoutRouteImport
-      parentRoute: typeof AuthenticatedRoute
     }
   }
 }
 
-interface AuthenticatedRouteChildren {
-  AuthenticatedCheckoutRoute: typeof AuthenticatedCheckoutRoute
-  AuthenticatedPedidosRoute: typeof AuthenticatedPedidosRoute
-}
-
-const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedCheckoutRoute: AuthenticatedCheckoutRoute,
-  AuthenticatedPedidosRoute: AuthenticatedPedidosRoute,
-}
-
-const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
-  AuthenticatedRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthenticatedRoute: AuthenticatedRouteWithChildren,
-  CadastroRoute: CadastroRoute,
+  AdminRoute: AdminRoute,
+  ContatoRoute: ContatoRoute,
   EsqueciSenhaRoute: EsqueciSenhaRoute,
   LoginRoute: LoginRoute,
   ResetPasswordRoute: ResetPasswordRoute,
-  ApiMercadoPagoWebhookRoute: ApiMercadoPagoWebhookRoute,
-  CheckoutErroRoute: CheckoutErroRoute,
-  CheckoutPendenteRoute: CheckoutPendenteRoute,
-  CheckoutSucessoRoute: CheckoutSucessoRoute,
+  SobreRoute: SobreRoute,
+  ParaPublicoIdRoute: ParaPublicoIdRoute,
+  ProdutosProdutoIdRoute: ProdutosProdutoIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

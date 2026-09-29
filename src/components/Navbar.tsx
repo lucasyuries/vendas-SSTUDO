@@ -1,171 +1,110 @@
-import { useState, useEffect } from "react";
-import { Link } from "@tanstack/react-router";
-import { Menu, X, LogOut, User as UserIcon, Package, ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { useAuth } from "@/integrations/supabase/auth-context";
-import logoSstudoAsset from "@/assets/logo-sstudo.webp.asset.json";
-const logoSstudo = logoSstudoAsset.url;
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+// ============================================================================
+// Barra de navegação
+// ----------------------------------------------------------------------------
+// O menu do celular é um <details> nativo, não um painel controlado por estado
+// do React. A diferença importa: com estado, quem chega sem JavaScript não
+// consegue abrir o menu e fica sem navegação nenhuma. Com <details>, o menu
+// abre, fecha e é operável por teclado sem uma linha de script.
+//
+// O JavaScript entra só como melhoria: fechar o menu depois de clicar em um
+// link, para a âncora não deixar o painel aberto por cima do conteúdo.
+// ============================================================================
 
-const links = [
-  { href: "#solucao", label: "Solução" },
-  { href: "#contato", label: "Contato" },
-  { href: "#faq", label: "FAQ" },
-];
+import { useEffect, useRef } from "react";
+import { Link } from "@tanstack/react-router";
+import { Menu, X, LogOut } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/integrations/supabase/auth-context";
+import { MegaMenuDesktop, MegaMenuMobile } from "@/components/MegaMenu";
 
 export function Navbar() {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const { user, signOut, loading } = useAuth();
+  const menuCelular = useRef<HTMLDetailsElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const detalhes = menuCelular.current;
+    if (!detalhes) return;
+
+    function fecharAoNavegar(evento: MouseEvent) {
+      const alvo = evento.target as HTMLElement | null;
+      if (alvo?.closest("a") && detalhes) detalhes.open = false;
+    }
+
+    detalhes.addEventListener("click", fecharAoNavegar);
+    return () => detalhes.removeEventListener("click", fecharAoNavegar);
   }, []);
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-40 w-full transition-all",
-        scrolled
-          ? "bg-background/85 backdrop-blur-md border-b border-border"
-          : "bg-background/0",
-      )}
-    >
+    <header className="sticky top-0 z-40 w-full border-b border-border bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button
-                  type="button"
-                  className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-border bg-card/60 px-2.5 text-sm text-foreground hover:bg-muted transition-colors"
-                  aria-label="Abrir menu"
-                >
-                  <Menu className="h-4 w-4" />
-                  <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-60">
-                <DropdownMenuLabel>Navegação</DropdownMenuLabel>
-                {links.map((l) => (
-                  <DropdownMenuItem key={l.href} asChild>
-                    <a href={l.href}>{l.label}</a>
-                  </DropdownMenuItem>
-                ))}
-                {!loading && user && (
-                  <>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuLabel>Conta</DropdownMenuLabel>
-                    <DropdownMenuItem asChild>
-                      <Link to="/pedidos">
-                        <Package className="h-4 w-4" /> Meus pedidos
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => signOut()}>
-                      <LogOut className="h-4 w-4" /> Sair
-                    </DropdownMenuItem>
-                  </>
-                )}
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <a href="#top" className="flex items-center gap-2">
-              <img src={logoSstudo} alt="SSTudo — Plataforma NR-01" width={96} height={32} fetchPriority="high" decoding="async" className="h-8 w-auto" />
-            </a>
-          </div>
-
-          <nav className="hidden md:flex items-center gap-7">
-            {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {l.label}
-              </a>
-            ))}
-          </nav>
-
-          <div className="hidden md:flex items-center gap-2">
-            {!loading && user && (
-              <>
-                <span className="hidden lg:inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-                  <UserIcon className="h-3.5 w-3.5" />
-                  {user.email}
-                </span>
-                <Button asChild size="sm" variant="ghost">
-                  <Link to="/pedidos">
-                    <Package className="h-4 w-4" /> Pedidos
-                  </Link>
-                </Button>
-                <Button size="sm" variant="ghost" onClick={() => signOut()} title="Sair">
-                  <LogOut className="h-4 w-4" />
-                  Sair
-                </Button>
-              </>
-            )}
-          </div>
-
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg text-foreground hover:bg-muted"
-            aria-label="Abrir menu"
+        <div className="flex h-16 items-center justify-between gap-4">
+          {/* Link para a página inicial, não âncora: com âncora, clicar no logo
+              dentro de uma página interna apenas rolava para o topo dela. */}
+          <Link
+            to="/"
+            className="flex min-h-11 shrink-0 items-center gap-2"
+            aria-label="SSTudo, ir para a página inicial"
           >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
-        </div>
+            <img
+              src="/logo-sstudo.webp"
+              alt="SSTudo"
+              width={368}
+              height={122}
+              fetchPriority="high"
+              decoding="async"
+              className="h-8 w-auto"
+            />
+          </Link>
 
-        {open && (
-          <div className="md:hidden pb-4">
-            <div className="flex flex-col gap-1 pt-2 border-t border-border">
-              {links.map((l) => (
-                <a
-                  key={l.href}
-                  href={l.href}
-                  onClick={() => setOpen(false)}
-                  className="px-2 py-3 text-sm text-foreground/90 hover:bg-muted rounded-md"
-                >
-                  {l.label}
-                </a>
-              ))}
-              {!loading && user && (
-                <>
-                  <div className="px-2 py-2 text-xs text-muted-foreground border-t border-border mt-2">
-                    {user.email}
-                  </div>
-                  <Button asChild variant="outline" className="mt-2 w-full">
-                    <Link to="/pedidos" onClick={() => setOpen(false)}>
-                      <Package className="h-4 w-4" /> Meus pedidos
-                    </Link>
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="mt-2 w-full"
-                    onClick={() => {
-                      setOpen(false);
-                      signOut();
-                    }}
-                  >
-                    <LogOut className="h-4 w-4" /> Sair
-                  </Button>
-                </>
-              )}
-            </div>
+          <MegaMenuDesktop />
+
+          <div className="flex items-center gap-2">
+            {!loading && user && (
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => signOut()}
+                title="Sair"
+                className="hidden lg:inline-flex"
+              >
+                <LogOut className="h-4 w-4" />
+                Sair
+              </Button>
+            )}
+
+            {/* Chamada principal, presente em todas as páginas. Aponta para a
+                página de contato, e não para uma âncora: a âncora só existe na
+                página inicial, então em toda página interna o botão ficava
+                morto. */}
+            <Link
+              to="/contato"
+              className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+            >
+              Solicitar orçamento
+            </Link>
           </div>
-        )}
+        </div>
       </div>
+
+      {/* Menu do celular: acordeão nativo, funcional sem JavaScript. */}
+      <details ref={menuCelular} className="group border-t border-border lg:hidden">
+        <summary
+          className="mx-auto flex min-h-12 max-w-7xl cursor-pointer list-none items-center gap-2 px-4 text-sm font-medium text-foreground marker:hidden sm:px-6"
+          aria-label="Abrir menu de navegação"
+        >
+          <Menu className="h-5 w-5 group-open:hidden" />
+          <X className="hidden h-5 w-5 group-open:block" />
+          Menu
+        </summary>
+        <div className="mx-auto max-w-7xl px-4 pb-4 sm:px-6">
+          <MegaMenuMobile />
+          {!loading && user && (
+            <Button variant="outline" className="mt-4 min-h-12 w-full" onClick={() => signOut()}>
+              <LogOut className="h-4 w-4" /> Sair
+            </Button>
+          )}
+        </div>
+      </details>
     </header>
   );
 }

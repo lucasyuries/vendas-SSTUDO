@@ -2,17 +2,20 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { StickyQuoteBar } from "@/components/StickyQuoteBar";
 import { Hero } from "@/sections/Hero";
+import { Problem } from "@/sections/Problem";
 import { Products } from "@/sections/Products";
+import { HowItWorks } from "@/sections/HowItWorks";
+import { Compliance } from "@/sections/Compliance";
 import { WhySSTudo } from "@/sections/WhySSTudo";
-import { Solution } from "@/sections/Solution";
-import { Testimonials } from "@/sections/Testimonials";
 import { FAQ } from "@/sections/FAQ";
 import { FinalCTA } from "@/sections/FinalCTA";
 import { Contact } from "@/sections/Contact";
-import ogImageAsset from "@/assets/og-image-sstudo.png.asset.json";
-
-const OG_IMAGE_URL = `https://sstudo.com.br${ogImageAsset.url}`;
+import { HOME_FAQ, faqToJsonLd } from "@/lib/faq";
+// Gerada por scripts/gerar-og-image.mjs, em 1200x630. Regenerar sempre que o
+// título ou a proposta de valor do hero mudarem.
+const OG_IMAGE_URL = "https://sstudo.com.br/og-image-sstudo.png";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -39,7 +42,10 @@ export const Route = createFileRoute("/")({
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "pt_BR" },
       { property: "og:site_name", content: "SSTudo" },
-      { property: "og:title", content: "SSTudo — Soluções em SST: PGR, ASO, Denúncias e Riscos Psicossociais" },
+      {
+        property: "og:title",
+        content: "SSTudo — Soluções em SST: PGR, ASO, Denúncias e Riscos Psicossociais",
+      },
       {
         property: "og:description",
         content:
@@ -49,7 +55,10 @@ export const Route = createFileRoute("/")({
       { property: "og:image", content: OG_IMAGE_URL },
 
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "SSTudo — Conformidade NR-01 | PGR e Burnout sem Planilhas" },
+      {
+        name: "twitter:title",
+        content: "SSTudo — Conformidade NR-01 | PGR e Burnout sem Planilhas",
+      },
       {
         name: "twitter:description",
         content:
@@ -104,52 +113,11 @@ export const Route = createFileRoute("/")({
       },
       {
         type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: [
-            {
-              "@type": "Question",
-              name: "O que é a SSTudo?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "A SSTudo é uma empresa de tecnologia com quatro produtos voltados para conformidade em Segurança e Saúde no Trabalho: Diagnóstico PGR, Denúncia Proativa, ASO Digital e PsicoHub.",
-              },
-            },
-            {
-              "@type": "Question",
-              name: "Preciso contratar os 4 produtos juntos?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "Não. Cada produto funciona de forma independente e pode ser contratado separadamente, de acordo com a necessidade da sua empresa.",
-              },
-            },
-            {
-              "@type": "Question",
-              name: "A SSTudo atende empresas de qualquer porte?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "Sim. Atendemos desde pequenas empresas até consultorias que gerenciam múltiplos clientes simultaneamente.",
-              },
-            },
-            {
-              "@type": "Question",
-              name: "Como faço para contratar algum dos produtos?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "Basta clicar no botão de WhatsApp em qualquer parte do site ou acessar diretamente o site do produto de interesse. Nossa equipe vai te orientar sobre o melhor plano para sua empresa.",
-              },
-            },
-            {
-              "@type": "Question",
-              name: "A SSTudo oferece suporte técnico?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "Sim, oferecemos suporte via WhatsApp, e-mail e chat para todos os clientes.",
-              },
-            },
-          ],
-        }),
+        // Gerado a partir da mesma fonte que a seção visível da página, para
+        // que os dois não possam divergir. Antes eram duas listas separadas, e
+        // a estruturada ficou prometendo orientar sobre "o melhor plano"
+        // depois de o site ter deixado de vender por assinatura.
+        children: JSON.stringify(faqToJsonLd(HOME_FAQ)),
       },
     ],
   }),
@@ -161,16 +129,20 @@ function Index() {
       <Navbar />
       <main>
         <Hero />
+        <Problem />
         <Products />
+        <HowItWorks />
+        {/* Ocupa o lugar dos depoimentos fictícios, removidos por não serem
+            verificáveis. Diferente deles, cada norma aqui é checável. */}
+        <Compliance />
         <WhySSTudo />
-        <Solution />
-        <Testimonials />
         <FAQ />
         <FinalCTA />
         <Contact />
       </main>
       <Footer />
       <WhatsAppFloat />
+      <StickyQuoteBar />
     </div>
   );
 }

@@ -1,90 +1,81 @@
-import heroLaptop from "@/assets/hero-laptop-v2.webp.asset.json";
+// ============================================================================
+// Hero da página inicial
+// ----------------------------------------------------------------------------
+// Sem foto, por decisão: banco de imagem genérico enfraquece em vez de ajudar.
+// No lugar entra a matriz de risco, que é o instrumento mais reconhecível da
+// segurança do trabalho e exatamente o que o PsicoHub produz. Ela diz o que a
+// empresa faz antes de o visitante ler uma linha.
+//
+// Havia aqui uma faixa de autosseleção de público — "Sou empresa", "Sou
+// assessoria" e assim por diante. Ela foi removida a pedido do cliente. Os
+// quatro botões mandavam todos para /contato, então prometiam uma bifurcação
+// que não existia; a segmentação real vive no eixo Soluções do menu, onde cada
+// público tem página própria.
+// ============================================================================
+
+import { Link } from "@tanstack/react-router";
+import { Check } from "lucide-react";
+import { RiskMatrix } from "@/components/RiskMatrix";
+
+const NORMAS = ["NR-01", "NR-04", "PCMSO", "LGPD"];
 
 export function Hero() {
   return (
-    <section
-      id="top"
-      className="relative overflow-hidden"
-      style={{ backgroundColor: "#0a1628" }}
-    >
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(ellipse 60% 70% at 25% 50%, #0f2040 0%, transparent 70%)",
-        }}
-      />
+    <>
+      <section id="top" className="relative overflow-hidden bg-brand-deep">
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-10"
+          style={{
+            background:
+              "radial-gradient(ellipse 70% 80% at 18% 35%, var(--brand-deep-glow) 0%, transparent 70%)",
+          }}
+        />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12 lg:py-20">
-        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-          {/* Coluna esquerda */}
-          <div className="flex flex-col items-start text-left">
-            <div
-              className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium"
-              style={{
-                backgroundColor: "rgba(37,99,235,0.15)",
-                border: "1px solid rgba(37,99,235,0.4)",
-                color: "#93c5fd",
-              }}
-            >
-              Conformidade em SST, em um só lugar
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
+          <div className="grid items-center gap-12 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              <h1 className="max-w-2xl font-display text-display text-on-deep">
+                Conformidade em SST, do diagnóstico ao documento assinado
+              </h1>
+
+              <p className="mt-6 max-w-xl text-lead text-on-deep-soft">
+                PGR, ASO, riscos psicossociais e canal de denúncias em ferramentas que conversam
+                entre si. Para empresas, assessorias e clínicas que não podem errar prazo nem perder
+                documento.
+              </p>
+
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  to="/contato"
+                  className="inline-flex min-h-12 items-center justify-center rounded-lg bg-primary px-7 py-3 text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+                >
+                  Solicitar orçamento
+                </Link>
+                <a
+                  href="#produtos"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-on-deep-soft/35 px-7 py-3 text-base font-semibold text-on-deep transition-colors hover:bg-on-deep/10"
+                >
+                  Ver os quatro produtos
+                </a>
+              </div>
+
+              <ul className="mt-9 flex flex-wrap gap-x-7 gap-y-3">
+                {NORMAS.map((norma) => (
+                  <li key={norma} className="flex items-center gap-2 text-sm text-on-deep-soft">
+                    <Check className="h-4 w-4 shrink-0 text-brand-highlight" />
+                    {norma}
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <h1 className="mt-6 max-w-xl font-display text-4xl md:text-5xl font-bold leading-[1.1] text-white">
-              Soluções completas para sua empresa estar em{" "}
-              <span style={{ color: "#60a5fa" }}>conformidade</span> com as
-              normas de Segurança e Saúde no Trabalho
-            </h1>
-
-            <p
-              className="mt-5 max-w-lg text-base leading-relaxed"
-              style={{ color: "#94a3b8" }}
-            >
-              Sua empresa não precisa contratar quatro fornecedores
-              diferentes para atender às exigências de SST. A SSTudo reúne
-              PGR, ASO, canal de denúncias e análise de riscos psicossociais
-              em soluções conectadas, pensadas para reduzir o trabalho manual
-              e o risco de autuação — sem depender de planilhas ou processos
-              manuais.
-            </p>
-
-            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
-              <a
-                href="https://wa.me/559391009999"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-8 inline-flex items-center justify-center rounded-lg px-6 py-4 text-base font-semibold text-white transition-opacity hover:opacity-90"
-                style={{ backgroundColor: "#2563eb" }}
-              >
-                Falar com um especialista
-              </a>
+            <div className="lg:col-span-5">
+              <RiskMatrix />
             </div>
-
-            <div
-              className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs"
-              style={{ color: "#94a3b8" }}
-            >
-              <span>🔒 LGPD compliant</span>
-              <span>✓ 100% anônimo</span>
-              <span>📄 PDF em 1 clique</span>
-            </div>
-          </div>
-
-          {/* Coluna direita */}
-          <div className="hidden lg:flex justify-center lg:justify-end">
-            <img
-              src={heroLaptop.url}
-              alt="Painel de gestão SST da SSTudo"
-              width={580}
-              height={431}
-              fetchPriority="high"
-              decoding="async"
-              className="w-full max-w-[580px] h-auto rounded-lg"
-            />
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

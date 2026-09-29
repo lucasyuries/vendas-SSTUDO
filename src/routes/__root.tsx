@@ -48,7 +48,24 @@ export const Route = createRootRoute({
       { name: "twitter:title", content: "SSTudo" },
       { name: "twitter:description", content: "Conformidade NR-01 sem planilhas." },
     ],
-    links: [{ rel: "stylesheet", href: appCss }],
+    links: [
+      { rel: "stylesheet", href: appCss },
+      // As fontes estavam declaradas no CSS e nunca eram carregadas: o site
+      // inteiro renderizava na fonte padrão do sistema operacional, sem
+      // nenhuma identidade tipográfica.
+      //
+      // A escolha é deliberada e ligada ao assunto. Archivo é um grotesco de
+      // sinalização — segurança do trabalho vive de placa e de documento
+      // normativo, e o peso fechado nos títulos soa autoridade sem soar
+      // corporativo genérico. IBM Plex Sans foi desenhada para documentação
+      // técnica: aguenta parágrafo longo de texto normativo sem cansar.
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap",
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,

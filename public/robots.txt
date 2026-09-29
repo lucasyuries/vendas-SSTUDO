@@ -1,7 +1,10 @@
 User-agent: *
 Allow: /
+
+# Páginas de conta e painel administrativo: não indexar.
 Disallow: /login
-Disallow: /checkout
-Disallow: /dashboard
+Disallow: /esqueci-senha
+Disallow: /reset-password
+Disallow: /admin
 
 Sitemap: https://sstudo.com.br/sitemap.xml

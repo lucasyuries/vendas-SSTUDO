@@ -1,12 +1,13 @@
+// No celular o botão sobe acima da barra fixa de orçamento, para os dois não se
+// sobreporem. No desktop, onde a barra não existe, volta ao canto.
 export function WhatsAppFloat() {
   return (
     <a
-      href="https://wa.me/559391009999"
+      href="https://wa.me/5593992397414"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chamar no WhatsApp"
-      className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition-transform hover:scale-105"
-      style={{ backgroundColor: "#25D366" }}
+      className="fixed bottom-24 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-whatsapp shadow-lg transition-transform hover:scale-105 lg:bottom-5"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
