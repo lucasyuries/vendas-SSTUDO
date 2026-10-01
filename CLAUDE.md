@@ -44,11 +44,17 @@ O projeto foi criado com Bun (existe um `bun.lockb`), mas também há
 - O arquivo de ambiente é lido **uma vez, na subida do processo**. Trocar um
   valor com o servidor no ar não tem efeito e nada avisa; é preciso reiniciar.
 - `.env.example` documenta todas as variáveis e quais são secretas.
-- Atenção: `src/integrations/supabase/admin.server.ts` lança exceção já na
-  importação quando `SYSTEM_SUPABASE_URL` ou `SYSTEM_SUPABASE_SERVICE_ROLE_KEY`
-  faltam. Como esse módulo entra na árvore de rotas pelo webhook, a ausência
-  dessas variáveis derruba a aplicação inteira com erro 500, inclusive a landing
-  page.
+- `src/integrations/supabase/admin.server.ts` cria o cliente de serviço de
+  forma **preguiçosa**, no primeiro uso. Isso é deliberado e não deve ser
+  revertido: enquanto a checagem rodava na importação do módulo, a falta de
+  `SYSTEM_SUPABASE_URL` ou `SYSTEM_SUPABASE_SERVICE_ROLE_KEY` derrubava a
+  aplicação inteira, inclusive a página pública, que não usa essas credenciais.
+  Foi a causa de todo build falhar no ambiente do Lovable entre agosto e
+  setembro de 2026, com a prévia congelada numa versão antiga.
+- Hoje, sem essas variáveis o site sobe normalmente e apenas duas coisas
+  param: o envio de orçamento e o painel de leads. **Elas continuam sendo
+  obrigatórias em produção** — sem elas os formulários falham e os leads se
+  perdem.
 
 ## Idioma
 
